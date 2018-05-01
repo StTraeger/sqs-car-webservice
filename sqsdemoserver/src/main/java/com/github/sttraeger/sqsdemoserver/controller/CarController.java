@@ -4,9 +4,6 @@ import com.github.sttraeger.sqsdemoserver.model.Car;
 import com.github.sttraeger.sqsdemoserver.repository.ICarRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author sttraeger
  * Controller for handling the requests to the server. No need to update this class because it is designed so that
@@ -20,8 +17,6 @@ public class CarController {
     public CarController(ICarRepository iCarRepository) {
         carRepository = iCarRepository;
     }
-
-    List<Car> cars = new ArrayList<>();
 
     /**
      * Returns an Iterable of all cars stored in the repository.
@@ -66,6 +61,12 @@ public class CarController {
         return carRepository.updateExistingCar(car);
     }
 
+    /**
+     * Deletes a car (if exists) with a given vin.
+     *
+     * @param vin the unique vin
+     * @return true if the car could be deleted, false instead
+     */
     @DeleteMapping("/cars/{vin}")
     public boolean deleteExistingCar(@PathVariable("vin") String vin) {
         return carRepository.deleteCar(vin);

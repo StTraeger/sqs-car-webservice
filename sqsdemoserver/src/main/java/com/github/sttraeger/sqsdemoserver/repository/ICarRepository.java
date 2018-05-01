@@ -2,6 +2,10 @@ package com.github.sttraeger.sqsdemoserver.repository;
 
 import com.github.sttraeger.sqsdemoserver.model.Car;
 
+/**
+ * @author sttraeger
+ * Interface for database operations.
+ */
 public interface ICarRepository {
 
     Iterable<Car> getCars();
