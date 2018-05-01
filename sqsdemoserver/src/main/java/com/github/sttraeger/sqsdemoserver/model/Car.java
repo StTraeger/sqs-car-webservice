@@ -1,24 +1,13 @@
 package com.github.sttraeger.sqsdemoserver.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
-/**
- * @author sttraeger
- * Simple car object. Will be used only for demo purpose.
- */
-@Entity
 public class Car {
 
-    @Id
     private String vin;
     private String manufacturer;
     private String model;
     private long hp;
-    @Temporal(TemporalType.DATE)
     private Date registrationDate;
     private double mileage;
 

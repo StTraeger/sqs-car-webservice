@@ -3,10 +3,6 @@ package com.github.sttraeger.sqsdemoserver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author sttraeger
- * The main application. SpringBootApplication starts the TomCat Webserver and the application.
- */
 @SpringBootApplication(scanBasePackages = "com.github.sttraeger.sqsdemoserver")
 public class Server {
 

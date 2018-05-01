@@ -4,15 +4,9 @@ services:
     build: .
     ports:
     - "8080:8080"
-    depends_on:
-      - database
   database:
     restart: always
     image: postgres:10.3-alpine
     ports:
     - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=demodb
 
