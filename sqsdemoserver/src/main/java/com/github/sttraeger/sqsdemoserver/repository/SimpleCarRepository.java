@@ -6,15 +6,18 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * @author sttraeger
+ * Simple implemenation of a car repository. Data is stored in an ArrayList. For testing purposes only.
+ */
 @Component
 public class SimpleCarRepository implements ICarRepository {
 
     private static List<Car> cars = new ArrayList<>();
 
     public SimpleCarRepository() {
-        cars.add(new Car("123456", "BMW", "X1", 150, new Date(2018, 04, 30), 200));
+        cars.add(new Car("123456", "BMW", "X1", 150, new Date(2018, 4, 30), 200));
         cars.add(new Car("456123", "Fiat", "Punto", 69, new Date(2012, 10, 11), 20000));
         cars.add(new Car("654321", "Ford", "Focus", 105, new Date(1999, 10, 11), 250441));
     }
@@ -26,25 +29,8 @@ public class SimpleCarRepository implements ICarRepository {
 
     @Override
     public Car getCarByVin(String vin) {
-        for(Car car: cars){
-            if(vin.equals(car.getVin()))
-                return car;
-        }
-        return null;
-    }
-
-    @Override
-    public Car createCar(String vin, Car car) {
-        cars.add(car);
-        return car;
-    }
-
-    @Override
-    public Car updateCar(Car car) {
-        for (Car actualCar : cars) {
-            if (actualCar.getVin().equals(car.getVin())) {
-                cars.remove(actualCar);
-                cars.add(car);
+        for (Car car : cars) {
+            if (vin.equals(car.getVin())) {
                 return car;
             }
         }
@@ -52,10 +38,50 @@ public class SimpleCarRepository implements ICarRepository {
     }
 
     @Override
-    public boolean deleteCar(String vin) {
+    public Car createCar(String vin, Car car) {
+        if (!isCarAlreadyExisting(vin)) {
+            cars.add(car);
+            return car;
+        }
+        return null;
+    }
+
+    @Override
+    public Car updateExistingCar(Car car) {
+        if (!isCarAlreadyExisting(car.getVin())) {
+            return null;
+        }
         for (Car actualCar : cars) {
-            if (actualCar.getVin().equals(actualCar.getVin())) {
+            if (actualCar.getVin().equals(car.getVin())) {
                 cars.remove(actualCar);
+                cars.add(car);
+            }
+        }
+        return car;
+    }
+
+    @Override
+    public boolean deleteCar(String vin) {
+        if (!isCarAlreadyExisting(vin)) {
+            return false;
+        }
+        for (Car actualCar : cars) {
+            if (actualCar.getVin().equals(vin)) {
+                cars.remove(actualCar);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks wether a car to a given vin already exists in data-storage.
+     *
+     * @param vin the vin to check
+     * @return true if car already exists in db, false instead
+     */
+    private boolean isCarAlreadyExisting(final String vin) {
+        for (Car car : cars) {
+            if (car.getVin().equals(vin)) {
                 return true;
             }
         }
