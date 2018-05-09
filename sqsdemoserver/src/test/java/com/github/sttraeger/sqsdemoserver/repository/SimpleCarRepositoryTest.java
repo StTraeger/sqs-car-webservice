@@ -3,7 +3,7 @@ package com.github.sttraeger.sqsdemoserver.repository;
 import com.github.sttraeger.sqsdemoserver.model.Car;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.util.Assert;
+import org.junit.Assert;
 
 import java.util.Date;
 import java.util.stream.StreamSupport;
