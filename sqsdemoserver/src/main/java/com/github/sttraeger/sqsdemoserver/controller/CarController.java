@@ -2,6 +2,7 @@ package com.github.sttraeger.sqsdemoserver.controller;
 
 import com.github.sttraeger.sqsdemoserver.model.Car;
 import com.github.sttraeger.sqsdemoserver.repository.ICarRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class CarController {
 
     private ICarRepository carRepository;
 
-    public CarController(ICarRepository iCarRepository) {
+    public CarController(@Qualifier("postgresCarRepository") ICarRepository iCarRepository) {
         carRepository = iCarRepository;
     }
 

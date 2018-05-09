@@ -11,6 +11,10 @@ public class Car {
     private Date registrationDate;
     private double mileage;
 
+    public Car(){
+
+    }
+
     public Car(String vin, String manufacturer, String model, long hp, Date registrationDate, double mileage) {
         this.vin = vin;
         this.manufacturer = manufacturer;

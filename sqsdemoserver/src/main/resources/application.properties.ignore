@@ -1,2 +1,0 @@
-spring.datasource.url=jdbc:postgresql://database:5432/demodb
-spring.jpa.hibernate.ddl-auto=create-drop
