@@ -1,5 +1,6 @@
 package com.github.sttraeger.sqsdemoserver;
 
+import com.github.sttraeger.sqsdemoserver.database.QueryHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * @author sttrae
+ * The main class for the WebService.
+ */
 @SpringBootApplication
 public class Server implements CommandLineRunner {
 
@@ -20,17 +25,14 @@ public class Server implements CommandLineRunner {
         SpringApplication.run(Server.class, args);
     }
 
+    /**
+     * Creates the 'cars' table in PostgreSQL if not exists.
+     * @param strings
+     * @throws Exception
+     */
     @Override
     public void run(String... strings) throws Exception {
         logger.info("Creating table");
-
-        this.jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS cars(" +
-                "vin varchar(10) NOT NULL PRIMARY KEY, " +
-                "manufacturer varchar(100) NOT NULL, " +
-                "model varchar(20) NOT NULL, " +
-                "hp integer NOT NULL, " +
-                "registrationDate date NOT NULL, " +
-                "mileage float NOT NULL)");
-
+        this.jdbcTemplate.execute(QueryHelper.CREATE_TABLE_CARS);
     }
 }

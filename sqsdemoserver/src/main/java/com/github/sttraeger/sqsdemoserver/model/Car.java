@@ -2,6 +2,10 @@ package com.github.sttraeger.sqsdemoserver.model;
 
 import java.util.Date;
 
+/**
+ * @author sttrae
+ * Car entity class.
+ */
 public class Car {
 
     private String vin;
