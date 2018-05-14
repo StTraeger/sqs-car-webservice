@@ -9,3 +9,4 @@ Used IDEs, frameworks and tools:
 - Docker CE for Windows Version 18.03.1-ce-win65 (17513)
 - Java JDK 1.8.0_171
 - Docker Compose Version 3
+- Maven as Build Tool
