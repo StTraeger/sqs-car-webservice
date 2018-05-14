@@ -38,11 +38,13 @@ public class PostgresCarRepository implements ICarRepository{
 
     @Override
     public Car createCar(String vin, Car car) {
+        logger.info("Trying to create car={} with vin='{}' in database.", car, vin);
         return null;
     }
 
     @Override
     public Car updateExistingCar(Car car) {
+        logger.info("Trying to update car={} in database.", car);
         return null;
     }
 

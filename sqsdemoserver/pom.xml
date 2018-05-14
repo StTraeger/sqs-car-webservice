@@ -35,11 +35,6 @@
             <version>4.12</version>
         </dependency>
         <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-        </dependency>
-        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.2</version>
@@ -70,15 +65,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>io.gatling</groupId>
-                <artifactId>gatling-maven-plugin</artifactId>
-                <version>2.2.1</version>
-                <configuration>
-                    <disableCompiler>true</disableCompiler>
-                    <simulationsFolder>src/test/scala</simulationsFolder>
-                </configuration>
             </plugin>
         </plugins>
     </build>

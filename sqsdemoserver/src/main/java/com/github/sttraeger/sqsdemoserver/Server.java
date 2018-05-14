@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * The main class for the WebService.
  */
 @SpringBootApplication
-public class Server implements CommandLineRunner {
+public class Server implements CommandLineRunner{
 
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
 
@@ -22,6 +22,7 @@ public class Server implements CommandLineRunner {
     private JdbcTemplate jdbcTemplate;
 
     public static void main(String[] args) {
+        logger.info("Starting Car Webservice...");
         SpringApplication.run(Server.class, args);
     }
 
@@ -32,7 +33,7 @@ public class Server implements CommandLineRunner {
      */
     @Override
     public void run(String... strings) throws Exception {
-        logger.info("Creating table");
+        logger.info("Creating table 'cars' (if not existing).");
         this.jdbcTemplate.execute(QueryHelper.CREATE_TABLE_CARS);
     }
 }

@@ -6,6 +6,9 @@ package com.github.sttraeger.sqsdemoserver.database;
  */
 public class QueryHelper {
 
+    /**
+     * Private constructor to prevent initialization of QueryHelper.
+     */
     private QueryHelper(){
 
     }
@@ -18,11 +21,21 @@ public class QueryHelper {
             "registrationDate date NOT NULL, " +
             "mileage float NOT NULL)";
 
+    /**
+     * Creates the get-query for a specified vin.
+     * @param vin the unique vin
+     * @return the get-query
+     */
     public static String getCarByVinQuery(final String vin){
         assert vin != null;
         return GET_ALL_CARS + " WHERE vin='" + vin.toLowerCase() + "'";
     }
 
+    /**
+     * Creates the delete-query for a specific vin.
+     * @param vin the unique vin
+     * @return the delete-query
+     */
     public static String deleteCarByVinQuery(final String vin){
         assert vin != null;
         return "DELETE FROM cars WHERE vin='" + vin + "'";

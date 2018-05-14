@@ -12,7 +12,7 @@ import java.util.List;
  * Simple implemenation of a car repository. Data is stored in an ArrayList. For testing purposes only.
  */
 @Component
-public class SimpleCarRepository implements ICarRepository {
+public class SimpleCarRepository implements ICarRepository{
 
     private static List<Car> cars = new ArrayList<>();
 

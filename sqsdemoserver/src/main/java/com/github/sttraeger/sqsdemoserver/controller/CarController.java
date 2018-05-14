@@ -2,6 +2,8 @@ package com.github.sttraeger.sqsdemoserver.controller;
 
 import com.github.sttraeger.sqsdemoserver.model.Car;
 import com.github.sttraeger.sqsdemoserver.repository.ICarRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class CarController {
 
     private ICarRepository carRepository;
+    private static final Logger logger = LoggerFactory.getLogger(CarController.class);
 
     public CarController(@Qualifier("postgresCarRepository") ICarRepository iCarRepository) {
         carRepository = iCarRepository;
