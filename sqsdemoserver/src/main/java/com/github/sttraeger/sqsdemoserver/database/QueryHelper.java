@@ -20,6 +20,10 @@ public class QueryHelper {
             "hp integer NOT NULL, " +
             "registrationDate date NOT NULL, " +
             "mileage float NOT NULL)";
+			
+	public static final String CREATE_TEST_CARS = "INSERT INTO cars " +
+			"(vin, manufacturer, model, hp, registrationDate, mileage)" +
+			"VALUES ('123456', 'BMW', 'X1', 250, TO_DATE('12/12/2017', 'DD/MM/YYYY'), 2333.1);";
 
     /**
      * Creates the get-query for a specified vin.

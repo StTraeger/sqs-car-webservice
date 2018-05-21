@@ -35,5 +35,7 @@ public class Server implements CommandLineRunner{
     public void run(String... strings) throws Exception {
         logger.info("Creating table 'cars' (if not existing).");
         this.jdbcTemplate.execute(QueryHelper.CREATE_TABLE_CARS);
+		logger.info("Insert sample car...");
+		this.jdbcTemplate.execute(QueryHelper.CREATE_TEST_CARS);
     }
 }
