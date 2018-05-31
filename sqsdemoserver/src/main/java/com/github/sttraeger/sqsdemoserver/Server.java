@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * The main class for the WebService.
  */
 @SpringBootApplication
-public class Server implements CommandLineRunner{
+public class Server implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
 
@@ -28,6 +28,7 @@ public class Server implements CommandLineRunner{
 
     /**
      * Creates the 'cars' table in PostgreSQL if not exists.
+     *
      * @param strings
      * @throws Exception
      */
@@ -35,7 +36,10 @@ public class Server implements CommandLineRunner{
     public void run(String... strings) throws Exception {
         logger.info("Creating table 'cars' (if not existing).");
         this.jdbcTemplate.execute(QueryHelper.CREATE_TABLE_CARS);
-		logger.info("Insert sample car...");
-		this.jdbcTemplate.execute(QueryHelper.CREATE_TEST_CARS);
+        // Trucnate table to prevent duplicate primary key exception
+        this.jdbcTemplate.execute(QueryHelper.TRUNCATE_CARS);
+        logger.info("Insert sample cars...");
+        this.jdbcTemplate.execute(QueryHelper.CREATE_TEST_CARS);
+
     }
 }

@@ -6,6 +6,9 @@ import com.github.sttraeger.sqsdemoserver.model.Car;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -30,20 +33,31 @@ public class PostgresCarRepository implements ICarRepository{
     }
 
     @Override
-    public Car getCarByVin(String vin) {
+    public ResponseEntity getCarByVin(String vin) {
         final String query = QueryHelper.getCarByVinQuery(vin);
         logger.info("Trying to get car for vin='{}'...", vin);
-        return (Car)jdbcTemplate.queryForObject(query, new CarRowMapper());
+        try {
+            Car retCar = (Car)jdbcTemplate.queryForObject(query, new CarRowMapper());
+            return new ResponseEntity(retCar, HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e){
+            return new ResponseEntity("No car with vin='" + vin + "' found in database.", HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
-    public Car createCar(String vin, Car car) {
+    public ResponseEntity createCar(String vin, Car car) {
         logger.info("Trying to create car={} with vin='{}' in database.", car, vin);
-        return null;
+        // Check if primary key already exists
+        int countForVin = this.jdbcTemplate.queryForObject("SELECT COUNT(*) FROM cars WHERE vin='" + vin + "';", Integer.class);
+        if(countForVin == 0){
+
+        }
+        logger.warn("Car with vin='" + vin + "' already exists in database! Creation not possible. Try update options instead.");
+        return new ResponseEntity("Car with vin='" + vin + "' already exists. Creation not possible.", HttpStatus.CONFLICT);
     }
 
     @Override
-    public Car updateExistingCar(Car car) {
+    public ResponseEntity updateExistingCar(Car car) {
         logger.info("Trying to update car={} in database.", car);
         return null;
     }

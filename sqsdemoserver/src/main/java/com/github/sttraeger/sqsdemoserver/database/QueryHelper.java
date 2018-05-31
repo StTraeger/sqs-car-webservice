@@ -22,8 +22,12 @@ public class QueryHelper {
             "mileage float NOT NULL)";
 			
 	public static final String CREATE_TEST_CARS = "INSERT INTO cars " +
-			"(vin, manufacturer, model, hp, registrationDate, mileage)" +
-			"VALUES ('123456', 'BMW', 'X1', 250, TO_DATE('12/12/2017', 'DD/MM/YYYY'), 2333.1);";
+			"(vin, manufacturer, model, hp, registrationDate, mileage) VALUES" +
+			"('123456', 'BMW', 'X1', 250, TO_DATE('12/12/2017', 'DD/MM/YYYY'), 2333.1)," +
+            "('654321', 'Ford', 'Mustang', 450, TO_DATE('01/02/2010', 'DD/MM/YYYY'), 50132.05)," +
+            "('456123', 'Fiat', 'Punto', 69, TO_DATE('11/11/2011', 'DD/MM/YYYY'), 48000.0);";
+
+	public static final String TRUNCATE_CARS = "TRUNCATE TABLE cars";
 
     /**
      * Creates the get-query for a specified vin.

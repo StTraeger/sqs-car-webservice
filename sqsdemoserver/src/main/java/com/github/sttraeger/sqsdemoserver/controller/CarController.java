@@ -5,6 +5,7 @@ import com.github.sttraeger.sqsdemoserver.repository.ICarRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class CarController {
      * @return the car if it exists, null instead
      */
     @GetMapping("/cars/{vin}")
-    public Car getCarByVin(@PathVariable("vin") String vin) {
+    public ResponseEntity getCarByVin(@PathVariable("vin") String vin) {
         return carRepository.getCarByVin(vin);
     }
 
@@ -55,7 +56,7 @@ public class CarController {
      * @return the new created car in the repository
      */
     @PostMapping("/cars")
-    public Car createNewCar(@RequestBody Car car) {
+    public ResponseEntity createNewCar(@RequestBody Car car) {
         return carRepository.createCar(car.getVin(), car);
     }
 
@@ -66,7 +67,7 @@ public class CarController {
      * @return the updated car or null if no car was found
      */
     @PutMapping("/cars")
-    public Car updateExistingCar(@RequestBody Car car) {
+    public ResponseEntity updateExistingCar(@RequestBody Car car) {
         return carRepository.updateExistingCar(car);
     }
 

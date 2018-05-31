@@ -1,6 +1,8 @@
 package com.github.sttraeger.sqsdemoserver.repository;
 
 import com.github.sttraeger.sqsdemoserver.model.Car;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,26 +30,26 @@ public class SimpleCarRepository implements ICarRepository{
     }
 
     @Override
-    public Car getCarByVin(String vin) {
+    public ResponseEntity getCarByVin(String vin) {
         for (Car car : cars) {
             if (vin.equals(car.getVin())) {
-                return car;
+                return new ResponseEntity(car, HttpStatus.OK);
             }
         }
         return null;
     }
 
     @Override
-    public Car createCar(String vin, Car car) {
+    public ResponseEntity createCar(String vin, Car car) {
         if (!isCarAlreadyExisting(vin)) {
             cars.add(car);
-            return car;
+            return new ResponseEntity(car, HttpStatus.OK);
         }
         return null;
     }
 
     @Override
-    public Car updateExistingCar(Car car) {
+    public ResponseEntity updateExistingCar(Car car) {
         if (!isCarAlreadyExisting(car.getVin())) {
             return null;
         }
@@ -57,7 +59,7 @@ public class SimpleCarRepository implements ICarRepository{
                 cars.add(car);
             }
         }
-        return car;
+        return new ResponseEntity(car, HttpStatus.OK);
     }
 
     @Override
