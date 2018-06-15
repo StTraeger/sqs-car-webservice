@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+
 /**
  * @author sttrae
  * @see com.github.sttraeger.sqsdemoserver.repository.ICarRepository
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Component;
  * file.
  */
 @Component
-public class PostgresCarRepository implements ICarRepository{
+public class PostgresCarRepository implements ICarRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(PostgresCarRepository.class);
 
@@ -29,7 +30,7 @@ public class PostgresCarRepository implements ICarRepository{
 
     @Override
     public Iterable<Car> getCars() {
-        return jdbcTemplate.query(QueryHelper.GET_ALL_CARS, new BeanPropertyRowMapper(Car.class));
+        return this.jdbcTemplate.query(QueryHelper.GET_ALL_CARS, new BeanPropertyRowMapper(Car.class));
     }
 
     @Override
@@ -37,9 +38,9 @@ public class PostgresCarRepository implements ICarRepository{
         final String query = QueryHelper.getCarByVinQuery(vin);
         logger.info("Trying to get car for vin='{}'...", vin);
         try {
-            Car retCar = (Car)jdbcTemplate.queryForObject(query, new CarRowMapper());
+            Car retCar = (Car) this.jdbcTemplate.queryForObject(query, new CarRowMapper());
             return new ResponseEntity(retCar, HttpStatus.OK);
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return new ResponseEntity("No car with vin='" + vin + "' found in database.", HttpStatus.NOT_FOUND);
         }
     }
@@ -48,17 +49,19 @@ public class PostgresCarRepository implements ICarRepository{
     public ResponseEntity createCar(String vin, Car car) {
         logger.info("Trying to create car={} with vin='{}' in database.", car, vin);
         // Check if primary key already exists
-        int countForVin = this.jdbcTemplate.queryForObject("SELECT COUNT(*) FROM cars WHERE vin='" + vin + "';", Integer.class);
-        if(countForVin == 0){
-
+        int countForVin = this.jdbcTemplate.queryForObject(QueryHelper.countCarsWithVin(vin), Integer.class);
+        if (countForVin == 0) {
+            this.jdbcTemplate.execute(QueryHelper.createCar(car));
+            return new ResponseEntity(HttpStatus.CREATED);
         }
-        logger.warn("Car with vin='" + vin + "' already exists in database! Creation not possible. Try update options instead.");
+        logger.warn("Car with vin='{}' already exists in database! Creation not possible. Try update options instead.", vin);
         return new ResponseEntity("Car with vin='" + vin + "' already exists. Creation not possible.", HttpStatus.CONFLICT);
     }
 
     @Override
     public ResponseEntity updateExistingCar(Car car) {
         logger.info("Trying to update car={} in database.", car);
+        this.jdbcTemplate.queryForObject(QueryHelper.updateCarByVin(car.getVin(), car), Integer.class);
         return null;
     }
 
@@ -66,12 +69,12 @@ public class PostgresCarRepository implements ICarRepository{
     public boolean deleteCar(String vin) {
         final String query = QueryHelper.deleteCarByVinQuery(vin);
         logger.info("Trying to delete car with vin='{}'...", vin);
-        int deletedRowsCount = jdbcTemplate.update(query);
-        if(deletedRowsCount == 0){
+        int deletedRowsCount = this.jdbcTemplate.update(query);
+        if (deletedRowsCount == 0) {
             logger.info("No matching car found. Deleted nothing.");
             return false;
         }
-        logger.info("Deleted " + deletedRowsCount + " rows.");
+        logger.info("Deleted {} rows.", deletedRowsCount);
         return true;
     }
 }

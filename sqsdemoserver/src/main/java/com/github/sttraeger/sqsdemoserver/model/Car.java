@@ -1,12 +1,13 @@
 package com.github.sttraeger.sqsdemoserver.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author sttrae
  * Car entity class.
  */
-public class Car {
+public class Car implements Serializable {
 
     private String vin;
     private String manufacturer;

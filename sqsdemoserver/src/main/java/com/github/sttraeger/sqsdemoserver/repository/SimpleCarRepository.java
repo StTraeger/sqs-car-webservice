@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,14 +15,30 @@ import java.util.List;
  * Simple implemenation of a car repository. Data is stored in an ArrayList. For testing purposes only.
  */
 @Component
-public class SimpleCarRepository implements ICarRepository{
+public class SimpleCarRepository implements ICarRepository {
 
-    private static List<Car> cars = new ArrayList<>();
+    private static final List<Car> cars = new ArrayList<>();
+
+    /**
+     * Creates a java.util.Date object using the java.util.Calendar class.
+     *
+     * @param year
+     * @param month
+     * @param dayOfMonth
+     * @return
+     */
+    private Date createDate(final int year, final int month, final int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        return cal.getTime();
+    }
 
     public SimpleCarRepository() {
-        cars.add(new Car("123456", "BMW", "X1", 150, new Date(2018, 4, 30), 200));
-        cars.add(new Car("456123", "Fiat", "Punto", 69, new Date(2012, 10, 11), 20000));
-        cars.add(new Car("654321", "Ford", "Focus", 105, new Date(1999, 10, 11), 250441));
+        cars.add(new Car("123456", "BMW", "X1", 150, createDate(2018, 4, 30), 200));
+        cars.add(new Car("456123", "Fiat", "Punto", 69, createDate(2012, 10, 11), 20000));
+        cars.add(new Car("654321", "Ford", "Focus", 105, createDate(1999, 10, 11), 250441));
     }
 
     @Override

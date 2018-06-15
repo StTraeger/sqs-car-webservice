@@ -1,5 +1,7 @@
 package com.github.sttraeger.sqsdemoserver.database;
 
+import com.github.sttraeger.sqsdemoserver.model.Car;
+
 /**
  * @author sttrae
  * Class for constants. Holding all SQL Queries used in this project.
@@ -29,12 +31,23 @@ public class QueryHelper {
 
 	public static final String TRUNCATE_CARS = "TRUNCATE TABLE cars";
 
+	public static final String updateCarByVin(final String vin, final Car car){
+	    return "UPDATE cars " +
+                "SET vin='" + vin + "', " +
+                "manufacturer='" + car.getManufacturer() + "', " +
+                "model='" + car.getModel() + "', " +
+                "hp=" + car.getHp() + ", " +
+                "registrationDate=" + car.getRegistrationDate() + ", " +
+                "mileage=" + car.getMileage() + "" +
+                "WHERE vin='" + vin + "';" ;
+    }
+
     /**
      * Creates the get-query for a specified vin.
      * @param vin the unique vin
      * @return the get-query
      */
-    public static String getCarByVinQuery(final String vin){
+    public static final String getCarByVinQuery(final String vin){
         assert vin != null;
         return GET_ALL_CARS + " WHERE vin='" + vin.toLowerCase() + "'";
     }
@@ -44,10 +57,22 @@ public class QueryHelper {
      * @param vin the unique vin
      * @return the delete-query
      */
-    public static String deleteCarByVinQuery(final String vin){
+    public static final String deleteCarByVinQuery(final String vin){
         assert vin != null;
         return "DELETE FROM cars WHERE vin='" + vin + "'";
     }
 
+    public static final String createCar(final Car car){
+        return "INSERT INTO cars (vin, manufacturer, model, hp, mileage, registrationDate) " +
+                "VALUES ('" + car.getVin() + "', " +
+                "'" + car.getManufacturer() + "', " +
+                "'" + car.getModel() + "', " +
+                + car.getHp() + ", " +
+                + car.getMileage() + ", " +
+                "TO_DATE(" + car.getRegistrationDate() + "));";
+    }
 
+    public static final String countCarsWithVin(final String vin){
+        return "SELECT COUNT(*) FROM cars WHERE vin='" + vin + "';";
+    }
 }

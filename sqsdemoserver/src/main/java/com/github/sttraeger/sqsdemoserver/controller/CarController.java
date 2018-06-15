@@ -2,14 +2,13 @@ package com.github.sttraeger.sqsdemoserver.controller;
 
 import com.github.sttraeger.sqsdemoserver.model.Car;
 import com.github.sttraeger.sqsdemoserver.repository.ICarRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * @author sttraeger
@@ -19,11 +18,10 @@ import java.util.List;
 @RestController
 public class CarController {
 
-    private ICarRepository carRepository;
-    private static final Logger logger = LoggerFactory.getLogger(CarController.class);
+    private final ICarRepository carRepository;
 
     public CarController(@Qualifier("postgresCarRepository") ICarRepository iCarRepository) {
-        carRepository = iCarRepository;
+        this.carRepository = iCarRepository;
     }
 
     List<Car> cars = new ArrayList<>();
@@ -35,7 +33,7 @@ public class CarController {
      */
     @GetMapping("/cars")
     public Iterable<Car> getAllCars() {
-        return carRepository.getCars();
+        return this.carRepository.getCars();
     }
 
     /**
@@ -46,7 +44,7 @@ public class CarController {
      */
     @GetMapping("/cars/{vin}")
     public ResponseEntity getCarByVin(@PathVariable("vin") String vin) {
-        return carRepository.getCarByVin(vin);
+        return this.carRepository.getCarByVin(vin);
     }
 
     /**
@@ -57,7 +55,7 @@ public class CarController {
      */
     @PostMapping("/cars")
     public ResponseEntity createNewCar(@RequestBody Car car) {
-        return carRepository.createCar(car.getVin(), car);
+        return this.carRepository.createCar(car.getVin(), car);
     }
 
     /**
@@ -68,11 +66,11 @@ public class CarController {
      */
     @PutMapping("/cars")
     public ResponseEntity updateExistingCar(@RequestBody Car car) {
-        return carRepository.updateExistingCar(car);
+        return this.carRepository.updateExistingCar(car);
     }
 
     @DeleteMapping("/cars/{vin}")
     public boolean deleteExistingCar(@PathVariable("vin") String vin) {
-        return carRepository.deleteCar(vin);
+        return this.carRepository.deleteCar(vin);
     }
 }
