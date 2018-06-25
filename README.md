@@ -9,4 +9,9 @@ Used IDEs, frameworks and tools:
 - Docker CE for Windows Version 18.03.1-ce-win65 (17513)
 - Java JDK 1.8.0_171
 - Docker Compose Version 3
-- Gradle as Build Tool
+- Maven as Build Tool
+
+## 3. Available Endpoints
+The following endpoints will be offered by the webservice (base-url: http://localhost:8080):
+- /cars -> Return all cars from the PostgreSQL database
+- /cars/{vin} -> Returns a car with the given vin
