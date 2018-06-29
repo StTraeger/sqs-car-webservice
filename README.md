@@ -15,3 +15,15 @@ Used IDEs, frameworks and tools:
 The following endpoints will be offered by the webservice (base-url: http://localhost:8080):
 - /cars -> Return all cars from the PostgreSQL database
 - /cars/{vin} -> Returns a car with the given vin
+
+## 4. Installation / Startup server
+1. Clone the repository and change into the repository via command line.
+2. Build the project using the 'gradle build' command.
+3. Check that your docker daemon is up and ready.
+4. Start a command line and navigate into the 'sqsdemoserver' directory. 
+5. Execute 'docker-compose up --build' to start all the necessary containers.
+
+Additional:
+- Docker-compose will pull a docker image of PostgreSQL database and a java-jre-slim image in order to execute the .jar file.
+- The containers will be linked together in a virtual docker network
+- In the 'sqsdemoserver' folder you will see a shell script 'wait-for-it.sh'. Due to some problems in the development process i needed this file that the Spring-Boot Server will only be started if the PostgreSQL container is running and all required tables are created. The script is not part of my own project (see [this repository](https://github.com/vishnubob/wait-for-it)).
