@@ -18,7 +18,7 @@ The following endpoints will be offered by the webservice (base-url: http://loca
 
 ## 4. Installation / Startup server
 1. Clone the repository and change into the repository via command line.
-2. Build the project using the 'gradle build' command.
+2. Build the project using the 'mvn clean package' command.
 3. Check that your docker daemon is up and ready.
 4. Start a command line and navigate into the 'sqsdemoserver' directory. 
 5. Execute 'docker-compose up --build' to start all the necessary containers.
